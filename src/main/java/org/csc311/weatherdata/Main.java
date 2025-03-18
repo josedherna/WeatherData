@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
@@ -27,9 +28,35 @@ public class Main {
         if (csvFile != null) {
             Path path = new File(csvFile.getFile()).toPath();
             data = readCSVFile(path);
-            countRainyDays(data);
-            monthlyAverageTemperature(7,data);
-            temperaturesAbove(25,data);
+
+            int choice = 0;
+            Scanner input = new Scanner(System.in);
+            do {
+                System.out.println("Select one of the following options by entering a number from the list:");
+                System.out.println("0- Exit");
+                System.out.println("1 - Show average temperature of a month");
+                System.out.println("2 - Show days that are above a given temperature");
+                System.out.println("3 - Show number of rainy days");
+                choice = input.nextInt();
+                switch(choice) {
+                    case 0 -> System.out.println("Sucessfully exited");
+                    case 1 -> {
+                        System.out.println("Enter a month as a number from 1 to 12");
+                        int month = input.nextInt();
+                        monthlyAverageTemperature(month, data);
+                    }
+                    case 2 -> {
+                        System.out.println("Enter a minimum temperature");
+                        double minTemp = input.nextDouble();
+                        temperaturesAbove(minTemp, data);
+                    }
+                    case 3 -> {
+                        countRainyDays(data);
+                    }
+                    default -> System.out.println("Invalid choice");
+                }
+            }
+            while (choice != 0);
         }
         else {
             System.out.println("No weather data found");
