@@ -29,7 +29,7 @@ public class Main {
             data = readCSVFile(path);
             countRainyDays(data);
             monthlyAverageTemperature(7,data);
-            System.out.println(data);
+            temperaturesAbove(25,data);
         }
         else {
             System.out.println("No weather data found");
@@ -249,9 +249,34 @@ public class Main {
                 Based on the data from the weatherdata.csv file,
                 
                 The average temperature in %s is,
-                %f.
+                %f Celsius.
                 """.formatted(month,average);
         
+        System.out.println(output);
+    }
+
+    /**
+     * This method shows the dates that are higher than a given temperature.
+     *
+     * @param tempThreshold The minimum temperature
+     * @param data The list containing records of weather data.
+     */
+    public static void temperaturesAbove(double tempThreshold, List<csvWeatherData> data) {
+        StringBuilder dates = new StringBuilder();
+        for (csvWeatherData datum : data) {
+            if (datum.temp() > tempThreshold) {
+                dates.append(datum.date()).append("\n");
+            }
+        }
+
+        String output = """
+                [Temperatures Above]
+                Based on the data from the weatherdata.csv file,
+                
+                The dates with temperatures about %f Celsius are,
+                %s
+                """.formatted(tempThreshold,dates);
+
         System.out.println(output);
     }
 }
