@@ -29,6 +29,7 @@ public class Main {
             data = readCSVFile(path);
             countRainyDays(data);
             monthlyAverageTemperature(7,data);
+            System.out.println(data);
         }
         else {
             System.out.println("No weather data found");
@@ -43,7 +44,7 @@ public class Main {
      * @param humidity The humidity of a specific date.
      * @param precipitation The amount of precipitation of a specific date.
      */
-    public record csvWeatherData(LocalDate date, double temp, int humidity, double precipitation) {
+    public record csvWeatherData(LocalDate date, double temp, int humidity, double precipitation, String category) {
     }
 
     /**
@@ -71,9 +72,25 @@ public class Main {
         String[] fields = data.split(",");
         LocalDate date = LocalDate.parse(fields[0]);
         double temperature = Double.parseDouble(fields[1]);
+        String category = weatherCategory(temperature);
         int humidity = Integer.parseInt(fields[2]);
         double precipitation = Double.parseDouble(fields[3]);
-        return new csvWeatherData(date,temperature,humidity,precipitation);
+        return new csvWeatherData(date, temperature, humidity, precipitation, category);
+    }
+
+    /**
+     * This method categorizes weather data based on the temperature.
+     *
+     * @param temp The temperature whose category is to be evaluated.
+     * @return The category of a weather data.
+     */
+    public static String weatherCategory(double temp) {
+        return switch ((int) temp) {
+            case 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 -> "Hot";
+            case 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 -> "Warm";
+            case -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 -> "Cold";
+            default -> "Unknown";
+        };
     }
 
     /**
@@ -218,6 +235,10 @@ public class Main {
                         count++;
                     }
                 }
+            }
+            default -> {
+                System.out.println("Invalid month number");
+                return;
             }
         }
 
