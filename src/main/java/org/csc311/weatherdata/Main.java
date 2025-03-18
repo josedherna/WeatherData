@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +28,7 @@ public class Main {
             Path path = new File(csvFile.getFile()).toPath();
             data = readCSVFile(path);
             countRainyDays(data);
+            monthlyAverageTemperature(7,data);
         }
         else {
             System.out.println("No weather data found");
@@ -91,8 +93,144 @@ public class Main {
                 [Rainy Days]
                 Based on the data from the weatherdata.csv file,
                 
-                There are %s rainy days in your weatherdata.csv file.
+                There are %s rainy days in the weatherdata.csv file.
                 """.formatted(count);
+        System.out.println(output);
+    }
+
+    /**
+     * This method calculates the average temperature of a given month.
+     *
+     * @param monthNumber The month that the average temperature will be calculated.
+     * @param data The list containing records of weather data.
+     */
+    public static void monthlyAverageTemperature(int monthNumber, List<csvWeatherData> data) {
+        double sum = 0;
+        double average = 0;
+        String month = "";
+        int count = 0;
+
+        switch (monthNumber) {
+            case 1 -> {
+                month = "JANUARY";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 2 -> {
+                month = "FEBRUARY";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 3 -> {
+                month = "MARCH";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 4 -> {
+                month = "APRIL";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 5 -> {
+                month = "MAY";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 6 -> {
+                month = "JUNE";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 7 -> {
+                month = "JULY";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 8 -> {
+                month = "AUGUST";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 9 -> {
+                month = "SEPTEMBER";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 10 -> {
+                month = "OCTOBER";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 11 -> {
+                month = "NOVEMBER";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+            case 12 -> {
+                month = "DECEMBER";
+                for (csvWeatherData fullDate : data) {
+                    if (Objects.equals(fullDate.date.getMonth().toString(), month)) {
+                        sum += fullDate.temp();
+                        count++;
+                    }
+                }
+            }
+        }
+
+        average = sum/count;
+
+        String output = """
+                [Average Temperature]
+                Based on the data from the weatherdata.csv file,
+                
+                The average temperature in %s is,
+                %f.
+                """.formatted(month,average);
+        
         System.out.println(output);
     }
 }
