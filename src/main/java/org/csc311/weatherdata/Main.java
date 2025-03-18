@@ -26,7 +26,7 @@ public class Main {
         if (csvFile != null) {
             Path path = new File(csvFile.getFile()).toPath();
             data = readCSVFile(path);
-            System.out.println(data);
+            countRainyDays(data);
         }
         else {
             System.out.println("No weather data found");
@@ -72,5 +72,27 @@ public class Main {
         int humidity = Integer.parseInt(fields[2]);
         double precipitation = Double.parseDouble(fields[3]);
         return new csvWeatherData(date,temperature,humidity,precipitation);
+    }
+
+    /**
+     * This method counts the amount of rainy days based on the weather data from the CSV file where the precipitation
+     * value is greater than 0.
+     *
+     * @param data The list containing records of weather data.
+     */
+    public static void countRainyDays(List<csvWeatherData> data) {
+        int count = 0;
+        for (csvWeatherData d : data) {
+            if (d.precipitation() > 0) {
+                count++;
+            }
+        }
+        String output = """
+                [Rainy Days]
+                Based on the data from the weatherdata.csv file,
+                
+                There are %s rainy days in your weatherdata.csv file.
+                """.formatted(count);
+        System.out.println(output);
     }
 }
